@@ -34,13 +34,16 @@ export default {
   }, 
   mounted() {
   //  debugger
-  this.$store.dispatch("getTasks", this.myList._id)// doesnt work because we cant find a listId
+  this.$store.dispatch("getTasks", this.myList._id)// 
   },
   computed:{
       // user() {
       // var user = this.$store.state.user;
       // console.log(user);
       // return user;
+    // },
+    // setTasks(){
+    //  this.displayTasks
     // },
     
     
@@ -53,7 +56,8 @@ export default {
     //   return this.$store.state.lists;
     // },
     tasks() {
-      this.$store.dispatch("getTasks", this.myList._id)
+      debugger
+    //  this.$store.dispatch("getTasks", this.myList._id)
       return this.$store.state.tasks[this.myList._id]
     },
   },
@@ -68,6 +72,9 @@ export default {
       this.$store.dispatch("createTask", newTask);
      
   //this.$store.dispatch("getTasks", this.myList._id)
+    },
+    displayTasks(){
+      this.$store.dispatch("getTasks", this.myList._id)
     }
 
   },

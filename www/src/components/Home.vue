@@ -32,12 +32,12 @@ export default {
   computed: {
     user() {
       var user = this.$store.state.user;
-      console.log(user);
+    //  console.log(user);
       return user;
     },
     boards() {
       var board = this.$store.state.boards;
-      console.log(board)
+    //  console.log(board)
       return board;
     }
   },

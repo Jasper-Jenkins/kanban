@@ -1,16 +1,46 @@
 <template>
   <div class="Task">
    {{myTask.title}}
+   <form @submit.prevent="createComment">
+    <input type="title" name="title" id="title" placeholder="Enter title" v-model="comment.title">
+    <input type="body" name="body" id="body" placeholder="Enter body" v-model="comment.body">      
+    <button type="submit">Create Comment</button>
+   </form> 
+  <ul>
+   <li v-for="comment in comments" :key="comment._id">
+     <!-- <tasks :myTask="task"></tasks>  
+       -->
+     </li>
+   </ul>
+
   </div>
 </template>
 
 <script>
+import router from '../router';
+//import comment from './Comment';
+
+
 export default {
   name: 'Task',
   props:['myTask'],
   data () {
     return {
-     
+      comment:{
+        title: "",
+        body: ""
+      }
+    }
+  },
+  computed:{
+    comments(){
+        return this.$store.state.tasks[this.myTask._id]
+    }
+  },
+  methods:{
+    createComment(){
+      var newComment = this.comment;
+      newComment.taskId = this.myTask 
     }
   }
 }

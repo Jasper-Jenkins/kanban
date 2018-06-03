@@ -30,6 +30,7 @@ export default new vuex.Store({
         activeBoard:[],
         tasks: {},
         lists: [],
+        comments: {},
         boardLists: []
     },
     mutations: {
@@ -62,16 +63,25 @@ export default new vuex.Store({
                 state.tasks[tasks[0].listId] = tasks
                 // console.log('This one', state.tasks)
             }
+        },
+        createComment(state, comment){
+            state.comments = comment
+        },
+        setComment(state, comments){
+            console.log(comments)
+            if(comments[0]){
+                state.comments[comments[0].taksId] = comments
+            }
         }
 
 
     },
     actions: {
         login({commit, dispatch}, loginCredentials){
-            console.log(loginCredentials)
+           // console.log(loginCredentials)
             auth.post('/auth/login', loginCredentials)
             .then(res=>{
-                console.log(res)
+           //     console.log(res)
                 commit('setUser', res.data)
                 router.push({name: 'Home'})
             })
@@ -81,6 +91,34 @@ export default new vuex.Store({
         },
         logout({commit, dispatch}){},
         register({commit, dispatch}, userData){},
+
+        
+        //Brian ADded logout/register double check..
+        
+        // logout({commit, dispatch}){
+        //     auth.delete('/logout') 
+        //     .then(res=>{
+        //         commit('deleteUser')
+        //         router.push({name: 'login'})
+        //     })
+        // },
+
+
+        // register({commit, dispatch}, userData){
+        //     auth.post('register', userData) 
+        //     .then(res=>{
+        //         commit('setUser', res.data)
+        //        router.push({name: 'Home'})
+        //     })
+        // },
+
+
+
+
+
+
+
+
         authenticate({commit, dispatch}){
             api.get('/authenticate')
             .then(res=>{
@@ -106,7 +144,7 @@ export default new vuex.Store({
         getBoards({commit, dispatch}, userId){
             api.get('/api/boards/user/'+ userId)
             .then(res=>{
-                console.log(res.data)
+            //    console.log(res.data)
                 commit('displayBoards', res.data)
             })
         },
@@ -132,9 +170,9 @@ export default new vuex.Store({
          //   debugger
             api.post('/api/tasks', task)
             .then(res=>{
-              //  debugger
-             //   console.log(res)
-             //  commit('createTask', res.data)
+                // console.log(task.listId)
+                // console.log(res.data.listId)
+              // commit('createTask', res.data)
                     dispatch('getTasks', task.listId )
             }).catch(err=>{ 
                 console.error(err)
@@ -143,16 +181,29 @@ export default new vuex.Store({
         },
         getTasks({commit, dispatch}, listId){
             var ghost = listId
-            console.log(ghost)
+          //  console.log(ghost)
             
             api.get('/api/lists/' + listId +'/tasks')
                 .then(res=>{
                   
-                    console.log(res)
+                    console.log(res.data)
                     // debugger
                     commit('setTasks', res.data)
                 })
-         }
+         },
+                createComment({commit, dispatch}, comment){
+                api.post('/api/comments', comment)
+                .then(res=>{
+                    dispatch('getComments', comment.taskId)
+                })
+                .catch(err=>{
+                    console.error(err)
+                })
+            },
+
+            // getComments({commit, dispatch}, taskId){
+
+            // }
         
         
 
