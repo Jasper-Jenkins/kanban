@@ -57,7 +57,7 @@ var tasks = require('./server-assets/routes/task')
 app.use(boards.router)
 app.use(lists.router)
 app.use(tasks.router)
-
+app.use(comments.router)
 
 //catch all
 app.get('*', (req, res, next) => {

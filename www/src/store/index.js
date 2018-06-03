@@ -198,7 +198,6 @@ export default new vuex.Store({
         getComments({ commit, dispatch }, taskId) {
             var ghost = taskId
              console.log(ghost)
-
             api.get('/api/tasks/' + taskId + '/comments')
                 .then(res => {
 
