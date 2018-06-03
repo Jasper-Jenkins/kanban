@@ -37,26 +37,6 @@ export default {
   this.$store.dispatch("getTasks", this.myList._id)// 
   },
   computed:{
-      // user() {
-      // var user = this.$store.state.user;
-      // console.log(user);
-      // return user;
-    // },
-    // setTasks(){
-    //  this.displayTasks
-    // },
-    
-    
-    
-    // board() {
-    //   var board = this.$store.state.activeBoard;
-    //   return board;
-    // },
-    // lists() {
-    //   return this.$store.state.lists;
-    // },
-
-    
     displayTasks(){
       this.$store.dispatch("getTasks", this.myList._id)
     },
@@ -68,10 +48,6 @@ export default {
   },
   methods:{
     createTask(){
-      // debugger
-        // this.task['boardId'] = this.$route.params.boardId
-        // this.task['ListId'] = this.$route.params.listId
-      //  console.log(this.$route.params.userId)
       var newTask = this.task
       newTask.listId = this.myList._id //assigning an id to the task that assocaites to the list
       this.$store.dispatch("createTask", newTask);

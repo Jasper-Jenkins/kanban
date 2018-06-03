@@ -31,10 +31,11 @@ export default {
         title: "",
         body: ""
       }
-    }
+    };
   },
   computed:{
     comments(){
+    //  debugger
       console.log(this.myTask._id)
         return this.$store.state.comments[this.myTask._id]
     }

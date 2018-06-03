@@ -9,7 +9,7 @@
    </form>      
  <ul>
     <li v-for="list in lists" :key="list._id">
-      <lists :myList="list"></lists> 
+     <span>List item:</span> <lists :myList="list"></lists> 
     </li>
 
   </ul>
