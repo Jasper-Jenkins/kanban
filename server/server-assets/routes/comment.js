@@ -11,9 +11,18 @@ router.get('/api/comments/:id', (req, res, next)=>{
         res.status(400).send(err)
       })
   })
-  
+  router.get('/api/tasks/:taskId/comments', (req, res, next)=>{
+    Commentt.find({taskId:req.params.taskId})
+      .then(comments =>{
+        res.status(200).send(comments)
+      })
+      .catch(err => {
+        res.status(400).send(err)
+      })
+  })
   //ADD
-  router.post('/api/comments', (req, res, next) => {
+  router.post('/api/comments/', (req, res, next) => {
+  console.log(req.body)
     var comment = req.body
     Commentt.create(comment)
       .then(newComment => {

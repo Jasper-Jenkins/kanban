@@ -25,9 +25,9 @@ vue.use(vuex)
 
 export default new vuex.Store({
     state: {
-        user:{},
-        boards:[],
-        activeBoard:[],
+        user: {},
+        boards: [],
+        activeBoard: [],
         tasks: {},
         lists: [],
         comments: {},
@@ -37,64 +37,64 @@ export default new vuex.Store({
         setUser(state, user) {
             state.user = user
         },
-        deleteUser(state){
+        deleteUser(state) {
             state.user = {}
         },
-        createBoard(state, board){ //may not be correct
-            state.boards.push(board) 
-        }, 
-        displayBoards(state, boards){
+        createBoard(state, board) { //may not be correct
+            state.boards.push(board)
+        },
+        displayBoards(state, boards) {
             state.boards = boards
         },
-        createList(state, list){
+        createList(state, list) {
             state.lists.push(list)
         },
-        getList(state, list){
+        getList(state, list) {
             state.lists = list
         },
-        createTask(state, task){
+        createTask(state, task) {
             //state.tasks.push(task)
             state.tasks = task
         },
-        setTasks(state, tasks){
+        setTasks(state, tasks) {
             console.log(tasks)
             // debugger
-            if(tasks[0]){ //taking the first element and grabbing the listId from it
+            if (tasks[0]) { //taking the first element and grabbing the listId from it
                 state.tasks[tasks[0].listId] = tasks
                 // console.log('This one', state.tasks)
             }
         },
-        createComment(state, comment){
+        createComment(state, comment) {
             state.comments = comment
         },
-        setComment(state, comments){
+        setComments(state, comments) {
             console.log(comments)
-            if(comments[0]){
-                state.comments[comments[0].taksId] = comments
+            if (comments[0]) {
+                state.comments[comments[0].taskId] = comments
             }
         }
 
 
     },
     actions: {
-        login({commit, dispatch}, loginCredentials){
-           // console.log(loginCredentials)
+        login({ commit, dispatch }, loginCredentials) {
+            // console.log(loginCredentials)
             auth.post('/auth/login', loginCredentials)
-            .then(res=>{
-           //     console.log(res)
-                commit('setUser', res.data)
-                router.push({name: 'Home'})
-            })
-            .catch(res=>{
-                
-            })
-        },
-        logout({commit, dispatch}){},
-        register({commit, dispatch}, userData){},
+                .then(res => {
+                    //     console.log(res)
+                    commit('setUser', res.data)
+                    router.push({ name: 'Home' })
+                })
+                .catch(res => {
 
-        
+                })
+        },
+        logout({ commit, dispatch }) { },
+        register({ commit, dispatch }, userData) { },
+
+
         //Brian ADded logout/register double check..
-        
+
         // logout({commit, dispatch}){
         //     auth.delete('/logout') 
         //     .then(res=>{
@@ -119,93 +119,100 @@ export default new vuex.Store({
 
 
 
-        authenticate({commit, dispatch}){
+        authenticate({ commit, dispatch }) {
             api.get('/authenticate')
-            .then(res=>{
-                console.log('auth success')
-                commit('setUser', res.data)
-                router.push({name: 'Home'})
-            })
-            .catch(res=>{})          
+                .then(res => {
+                    console.log('auth success')
+                    commit('setUser', res.data)
+                    router.push({ name: 'Home' })
+                })
+                .catch(res => { })
         },
-
-        createBoard({commit, dispatch}, board){
+        createBoard({ commit, dispatch }, board) {
 
             // board.userId = this.user.userId
             // console.log(this.user)
             // console.log(board)
-             api.post('/api/boards/', board)
-            .then(res=>{
-                console.log(res.data)
-                commit('createBoard', res.data)
-            })
-            
-        },
-        getBoards({commit, dispatch}, userId){
-            api.get('/api/boards/user/'+ userId)
-            .then(res=>{
-            //    console.log(res.data)
-                commit('displayBoards', res.data)
-            })
-        },
-        createList({commit, dispatch}, list){
-        //   debugger
-          //  console.log(list)
-            api.post('/api/lists', list)
-            .then(res=>{
-                console.log(res.data)
-                commit('createList', res.data)
-            })
-        }, 
-        getLists({commit, dispatch}, boardId){
-         //   console.log(boardId)
-            api.get('/api/boards/' + boardId + '/lists')
-            .then(res=> {
-            //    console.log(res)
-                commit('getList', res.data)
-            })
-        },
-        createTask({commit, dispatch}, task){
-           console.log(task)
-         //   debugger
-            api.post('/api/tasks', task)
-            .then(res=>{
-                // console.log(task.listId)
-                // console.log(res.data.listId)
-              // commit('createTask', res.data)
-                    dispatch('getTasks', task.listId )
-            }).catch(err=>{ 
-                console.error(err)
-            })
+            api.post('/api/boards/', board)
+                .then(res => {
+                    console.log(res.data)
+                    commit('createBoard', res.data)
+                })
 
         },
-        getTasks({commit, dispatch}, listId){
+        getBoards({ commit, dispatch }, userId) {
+            api.get('/api/boards/user/' + userId)
+                .then(res => {
+                    //    console.log(res.data)
+                    commit('displayBoards', res.data)
+                })
+        },
+        createList({ commit, dispatch }, list) {
+            //   debugger
+            //  console.log(list)
+            api.post('/api/lists', list)
+                .then(res => {
+                    console.log(res.data)
+                    commit('createList', res.data)
+                })
+        },
+        getLists({ commit, dispatch }, boardId) {
+            //   console.log(boardId)
+            api.get('/api/boards/' + boardId + '/lists')
+                .then(res => {
+                    //    console.log(res)
+                    commit('getList', res.data)
+                })
+        },
+        createTask({ commit, dispatch }, task) {
+            console.log(task)
+            api.post('/api/tasks', task)
+                .then(res => {
+                dispatch('getTasks', task.listId)
+                }).catch(err => {
+                    console.error(err)
+                })
+        },
+        getTasks({ commit, dispatch }, listId) {
             var ghost = listId
-          //  console.log(ghost)
-            
-            api.get('/api/lists/' + listId +'/tasks')
-                .then(res=>{
-                  
+            //  console.log(ghost)
+
+            api.get('/api/lists/' + listId + '/tasks')
+                .then(res => {
+
                     console.log(res.data)
                     // debugger
                     commit('setTasks', res.data)
                 })
-         },
-                createComment({commit, dispatch}, comment){
-                api.post('/api/comments', comment)
-                .then(res=>{
-                    dispatch('getComments', comment.taskId)
+        },
+        createComment({ commit, dispatch }, comment) {
+            console.log(comment)
+            api.post('/api/comments', comment)
+                .then(res => {
+                dispatch('getComments', comment.taskId)
                 })
-                .catch(err=>{
+                .catch(err => {
                     console.error(err)
                 })
-            },
+        },
+        getComments({ commit, dispatch }, taskId) {
+            var ghost = taskId
+             console.log(ghost)
 
-            // getComments({commit, dispatch}, taskId){
+            api.get('/api/tasks/' + taskId + '/comments')
+                .then(res => {
 
-            // }
-        
-        
+                    console.log(res.data)
+                    // debugger
+                    commit('setComments', res.data)
+                })
+        },
+
+        // getComments({commit, dispatch}, taskId){
+
+        // }
+
+
 
 
 

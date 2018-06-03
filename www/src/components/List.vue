@@ -55,8 +55,13 @@ export default {
     // lists() {
     //   return this.$store.state.lists;
     // },
+
+    
+    displayTasks(){
+      this.$store.dispatch("getTasks", this.myList._id)
+    },
     tasks() {
-      debugger
+     // debugger
     //  this.$store.dispatch("getTasks", this.myList._id)
       return this.$store.state.tasks[this.myList._id]
     },
@@ -72,9 +77,6 @@ export default {
       this.$store.dispatch("createTask", newTask);
      
   //this.$store.dispatch("getTasks", this.myList._id)
-    },
-    displayTasks(){
-      this.$store.dispatch("getTasks", this.myList._id)
     }
 
   },

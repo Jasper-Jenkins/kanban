@@ -10,6 +10,7 @@
    <li v-for="comment in comments" :key="comment._id">
      <!-- <tasks :myTask="task"></tasks>  
        -->
+       {{comment.title}}
      </li>
    </ul>
 
@@ -34,13 +35,18 @@ export default {
   },
   computed:{
     comments(){
-        return this.$store.state.tasks[this.myTask._id]
+      console.log(this.myTask._id)
+        return this.$store.state.comments[this.myTask._id]
     }
   },
   methods:{
     createComment(){
+    
       var newComment = this.comment;
-      newComment.taskId = this.myTask 
+      newComment.taskId = this.myTask._id;
+    
+      console.log(newComment)
+    this.$store.dispatch("createComment", newComment);
     }
   }
 }
