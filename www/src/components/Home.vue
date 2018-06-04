@@ -4,7 +4,8 @@
     <input type="title" name="title" id="title" placeholder="Enter title" v-model="board.title">
     <input type="body" name="body" id="body" placeholder="Enter body" v-model="board.body">      
     <button type="submit">Create Board</button>
-   </form>      
+   </form> 
+   <button @click='logout'>Logout</button>     
  <ul>
     <li v-for="board in boards" :key="board.id">
      <router-link :to="{name: 'Board', params:{boardId: board._id}}">
@@ -62,6 +63,10 @@ export default {
   },
 
   methods: {
+    logout(){
+      this.$store.dispatch('logout')
+    },
+
     createBoard() {
       this.$store.dispatch("createBoard", this.board);
     }

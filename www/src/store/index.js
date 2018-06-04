@@ -27,11 +27,11 @@ export default new vuex.Store({
     state: {
         user: {},
         boards: [],
-        activeBoard: [],
+     //   activeBoard: [],
         tasks: {},
         lists: [],
         comments: {},
-        boardLists: []
+       // boardLists: []
     },
     mutations: {
         setUser(state, user) {
@@ -56,22 +56,23 @@ export default new vuex.Store({
             //state.tasks.push(task)
             state.tasks = task
         },
-        setTasks(state, tasks) {
-            console.log(tasks)
+        setTasks(state, { listId, tasks }) {
+            // console.log(tasks)
             // debugger
-            if (tasks[0]) { //taking the first element and grabbing the listId from it
-                state.tasks[tasks[0].listId] = tasks
-                // console.log('This one', state.tasks)
-            }
+            // if (tasks[0]) { //taking the first element and grabbing the listId from it
+            vue.set(state.tasks, listId, tasks)
+            // state.tasks[tasks[0].listId] = tasks
+            // console.log('This one', state.tasks)
+            // }
         },
         createComment(state, comment) {
             state.comments = comment
         },
-        setComments(state, comments) {
+        setComments(state, { taskId, comments }) {
             console.log(comments)
-            if (comments[0]) {
-                state.comments[comments[0].taskId] = comments
-            }
+            // if (comments[0]) {
+            vue.set(state.comments, taskId, comments)
+            // }
         }
 
 
@@ -89,28 +90,28 @@ export default new vuex.Store({
 
                 })
         },
-        logout({ commit, dispatch }) { },
-        register({ commit, dispatch }, userData) { },
+      //  logout({ commit, dispatch }) { },
+     //   register({ commit, dispatch }, userData) { },
 
 
         //Brian ADded logout/register double check..
 
-        // logout({commit, dispatch}){
-        //     auth.delete('/logout') 
-        //     .then(res=>{
-        //         commit('deleteUser')
-        //         router.push({name: 'login'})
-        //     })
-        // },
+        logout({commit, dispatch}){
+            auth.delete('/auth/logout') 
+            .then(res=>{
+                commit('deleteUser')
+                router.push({name: 'Login'})
+            })
+        },
 
 
-        // register({commit, dispatch}, userData){
-        //     auth.post('register', userData) 
-        //     .then(res=>{
-        //         commit('setUser', res.data)
-        //        router.push({name: 'Home'})
-        //     })
-        // },
+        register({commit, dispatch}, userData){
+            auth.post('/auth/register', userData) 
+            .then(res=>{
+                commit('setUser', res.data)
+               router.push({name: 'Home'})
+            })
+        },
 
 
 
@@ -168,7 +169,7 @@ export default new vuex.Store({
             console.log(task)
             api.post('/api/tasks', task)
                 .then(res => {
-                dispatch('getTasks', task.listId)
+                    dispatch('getTasks', task.listId)
                 }).catch(err => {
                     console.error(err)
                 })
@@ -180,16 +181,16 @@ export default new vuex.Store({
             api.get('/api/lists/' + listId + '/tasks')
                 .then(res => {
 
-                    console.log(res.data)
+                    var tasks = res.data
                     // debugger
-                    commit('setTasks', res.data)
+                    commit('setTasks', { listId, tasks }) //tasks has a key:value pair from line 184 
                 })
         },
         createComment({ commit, dispatch }, comment) {
             console.log(comment)
             api.post('/api/comments', comment)
                 .then(res => {
-                dispatch('getComments', comment.taskId)
+                    dispatch('getComments', comment.taskId)
                 })
                 .catch(err => {
                     console.error(err)
@@ -197,13 +198,15 @@ export default new vuex.Store({
         },
         getComments({ commit, dispatch }, taskId) {
             var ghost = taskId
-             console.log(ghost)
+            console.log(ghost)
             api.get('/api/tasks/' + taskId + '/comments')
                 .then(res => {
 
                     console.log(res.data)
+                    var comments = res.data
+
                     // debugger
-                    commit('setComments', res.data)
+                    commit('setComments', {comments, taskId})
                 })
         },
 

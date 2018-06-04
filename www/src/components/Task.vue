@@ -8,8 +8,7 @@
    </form> 
   <ul>
    <li v-for="comment in comments" :key="comment._id">
-     <!-- <tasks :myTask="task"></tasks>  
-       -->
+     <!-- <tasks :myTask="task"></tasks> -->
        {{comment.title}}
      </li>
    </ul>
@@ -33,12 +32,15 @@ export default {
       }
     };
   },
+  mounted(){
+    this.$store.dispatch('getComments', this.myTask._id)
+  },
   computed:{
     comments(){
     //
     //  debugger
       console.log(this.myTask._id)
-        return this.$store.state.comments[this.myTask._id]
+      return this.$store.state.comments[this.myTask._id]
     }
   },
   methods:{

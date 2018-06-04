@@ -22,7 +22,6 @@
 <script>
 import router from "../router";
 import tasks from "./Task";
-//import lists from "./List"
 
 export default {
   name: "List",
@@ -42,12 +41,6 @@ export default {
     //  debugger
     this.$store.dispatch("getTasks", this.myList._id); //
   },
-  // watch:{
-  //   displayTasks() {
-  //     this.$store.dispatch("getTasks", this.myList._id);
-  //   }
-  // },
-
   computed: {
     tasks() {
       return this.$store.state.tasks[this.myList._id];
@@ -61,9 +54,12 @@ export default {
       var newTask = this.task;
       newTask.listId = this.myList._id; //assigning an id to the task that assocaites to the list
       this.$store.dispatch("createTask", newTask);
-
-      //this.$store.dispatch("getTasks", this.myList._id)
+    },
+    setTask(){
+      
+      this.$store.dispatch("getTasks", this.myList._id)
     }
+
   }
 };
 </script>

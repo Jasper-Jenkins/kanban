@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="userLogin">
    
    <form @submit.prevent="userLogin">
@@ -6,7 +7,14 @@
     <input type="text" name="password" id="password" placeholder="Enter password" v-model="login.password">      
     <button type="submit">LOGIN</button>
    </form>
-   
+     </div>
+     <div class="userRegister">
+    <form @submit.prevent="userRegister">
+     <input type="email" name="email" id="email" placeholder="Enter email" v-model="register.email">
+     <input type="text" name="password" id="password" placeholder="Enter password" v-model="register.password">      
+     <button type="submit">REGISTER</button>
+    </form>
+   </div>
 
   </div>
 </template>
@@ -20,6 +28,10 @@ export default {
   },
   data() {
     return {
+      register:{
+        email: "",
+        password:""
+      },
       login: {
         email: "",
         password: ""
@@ -30,6 +42,9 @@ export default {
   methods: {
     userLogin() {
       this.$store.dispatch("login", this.login);
+    },
+    userRegister() {
+      this.$store.dispatch("register", this.register);
     }
   }
 };

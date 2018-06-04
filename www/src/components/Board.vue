@@ -1,6 +1,7 @@
 
 <template>
   <div class="Board">
+    <button @click="logout">Logout</button>
     <div></div>
  <form @submit.prevent="createList">
     <input type="title" name="title" id="title" placeholder="Enter title" v-model="list.title">
@@ -52,6 +53,9 @@ export default {
     }
   },
   methods: {
+    logout(){
+      this.$store.dispatch('logout')
+    },
     createList() {
    
       this.list['boardId'] = this.$route.params.boardId
