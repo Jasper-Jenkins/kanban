@@ -15,7 +15,7 @@
 
   </ul>
   
-    <p>Freeze mother bitches</p>
+    <p>Choose a board</p>
   </div>
 </template>
 
@@ -47,8 +47,9 @@ export default {
       router.push({ name: "Login" });
     }
     //this.$store.dispatch()
-   // console.log(this.user._id)
+    console.log(this.user._id)
     this.$store.dispatch("getBoards", this.user._id);
+    this.$store.dispatch("getTasks", this.myList._id);
   },
   data() {
     return {

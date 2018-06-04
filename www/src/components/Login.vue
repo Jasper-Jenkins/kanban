@@ -6,7 +6,7 @@
     <input type="text" name="password" id="password" placeholder="Enter password" v-model="login.password">      
     <button type="submit">LOGIN</button>
    </form>
-
+   
 
   </div>
 </template>

@@ -1,5 +1,6 @@
 <template>
   <div class="List">
+    
     {{myList.title}}
    <form @submit.prevent="createTask">
     <input type="title" name="title" id="title" placeholder="Enter title" v-model="task.title">
@@ -15,6 +16,7 @@
    </ul>
   <!-- {{tasks}}   -->
   </div>
+  
 </template>
 
 <script>
@@ -24,40 +26,44 @@ import tasks from "./Task";
 
 export default {
   name: "List",
+  components: {
+    tasks
+  },
   props: ["myList"],
   data() {
     return {
-      task: {title: '',
-      body: ''}
-       
+      task: {
+        title: "",
+        body: ""
+      }
     };
-  }, 
+  },
   mounted() {
-  //  debugger
-  this.$store.dispatch("getTasks", this.myList._id)// 
+    //  debugger
+    this.$store.dispatch("getTasks", this.myList._id); //
   },
-  computed:{
-    displayTasks(){
-      this.$store.dispatch("getTasks", this.myList._id)
-    },
-    tasks() {
-     // debugger
-    //  this.$store.dispatch("getTasks", this.myList._id)
-      return this.$store.state.tasks[this.myList._id]
-    },
-  },
-  methods:{
-    createTask(){
-      var newTask = this.task
-      newTask.listId = this.myList._id //assigning an id to the task that assocaites to the list
-      this.$store.dispatch("createTask", newTask);
-     
-  //this.$store.dispatch("getTasks", this.myList._id)
-    }
+  // watch:{
+  //   displayTasks() {
+  //     this.$store.dispatch("getTasks", this.myList._id);
+  //   }
+  // },
 
+  computed: {
+    tasks() {
+      return this.$store.state.tasks[this.myList._id];
+    },
+    // displayTasks() {
+    //   this.$store.dispatch("getTasks", this.myList._id);
+    // }
   },
-  components: {
-    tasks
+  methods: {
+    createTask() {
+      var newTask = this.task;
+      newTask.listId = this.myList._id; //assigning an id to the task that assocaites to the list
+      this.$store.dispatch("createTask", newTask);
+
+      //this.$store.dispatch("getTasks", this.myList._id)
+    }
   }
 };
 </script>
@@ -69,12 +75,15 @@ h2 {
   font-weight: normal;
 }
 ul {
+  
   list-style-type: none;
   padding: 0;
 }
 li {
+  background-color:blue;
   display: inline-block;
   margin: 0 10px;
+  color:white;
 }
 a {
   color: #42b983;

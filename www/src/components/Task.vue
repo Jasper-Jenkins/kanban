@@ -35,6 +35,7 @@ export default {
   },
   computed:{
     comments(){
+    //
     //  debugger
       console.log(this.myTask._id)
         return this.$store.state.comments[this.myTask._id]
@@ -63,8 +64,10 @@ ul {
   padding: 0;
 }
 li {
+  background-color:orange;
   display: inline-block;
   margin: 0 10px;
+  color:black;
 }
 a {
   color: #42b983;

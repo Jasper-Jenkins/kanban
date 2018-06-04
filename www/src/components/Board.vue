@@ -24,6 +24,9 @@ import lists from "./List"
 
 export default {
   name: "Board",
+  components: {
+    lists
+  },
   data() {
     return {
       list: { title: '',
@@ -55,10 +58,6 @@ export default {
     console.log(this.list)
       this.$store.dispatch("createList", this.list);
     }
-  },
-  components: {
-    
-    lists
   }
 };
 </script>
@@ -74,6 +73,9 @@ ul {
   padding: 0;
 }
 li {
+  
+  border:black 1px solid;
+  background-color:palegreen;
   display: inline-block;
   margin: 0 10px;
 }
