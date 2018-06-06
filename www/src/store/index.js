@@ -219,10 +219,7 @@ export default new vuex.Store({
                 dispatch('getTasks', task.listId)
 
             })
-        }
-        // getComments({commit, dispatch}, taskId){
-
-        // }
+        },
         deleteComment({commit, dispatch, state}, comment) {
             api.delete(‘/comments/‘+comment._id, comment)
             .then(res=>{
@@ -250,12 +247,9 @@ export default new vuex.Store({
             dispatch(‘getTasks’)
             })
         }
+ // getComments({commit, dispatch}, taskId){
 
-
-
-
-
-
+        // }
 
 
     }
