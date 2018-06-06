@@ -10,6 +10,7 @@
     <li v-for="board in boards" :key="board.id">
      <router-link :to="{name: 'Board', params:{boardId: board._id}}">
        {{board.title}}
+       <button @click="deleteBoard(board)">DELETE</button>
       </router-link>
      <!-- <board></board> -->
     </li>
@@ -69,9 +70,11 @@ export default {
 
     createBoard() {
       this.$store.dispatch("createBoard", this.board);
-    }
+    },
+    deleteBoard(){
+      this.$store.dispatch("deleteBoard", board)
   }
-};
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

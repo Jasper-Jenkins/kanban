@@ -15,9 +15,9 @@
    <li v-for="comment in comments" :key="comment._id">
      <!-- <tasks :myTask="task"></tasks> -->
        {{comment.title}}
+       <button @click="deleteComment(comment)">DELETE</button>
      </li>
    </ul>
-
   </div>
 </template>
 
@@ -65,6 +65,9 @@ export default {
       this.myTask.oldListId = this.myTask.listId
       this.myTask.listId = this.newListId
       this.$store.dispatch("moveTask", this.myTask)
+    }, 
+    deleteComment(){
+      this.$store.dispatch("deleteComment", comment)
     }
   }
 }

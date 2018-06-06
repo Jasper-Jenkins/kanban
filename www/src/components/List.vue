@@ -11,7 +11,7 @@
  <ul>
    <li v-for="task in tasks" :key="task._id">
      <tasks :myTask="task"></tasks>  
-      
+     <button @click="deleteTask(task)">DELETE</button>
      </li>
    </ul>
   <!-- {{tasks}}   -->
@@ -58,10 +58,13 @@ export default {
     setTask(){
       
       this.$store.dispatch("getTasks", this.myList._id)
-    }
+    }, 
+    deleteTask(){
+      this.$store.dispatch("deleteTask", task)
 
-  }
-};
+  },
+}
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

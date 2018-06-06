@@ -11,6 +11,7 @@
  <ul>
     <li v-for="list in lists" :key="list._id">
      <span>List item:</span> <lists :myList="list"></lists> 
+     <button @click="deleteList(list)">DELETE</button>
     </li>
 
   </ul>
@@ -61,9 +62,11 @@ export default {
       this.list['boardId'] = this.$route.params.boardId
     console.log(this.list)
       this.$store.dispatch("createList", this.list);
-    }
+    },
+    deleteList(){
+      this.$store.dispatch("deleteList", list)
   }
-};
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
