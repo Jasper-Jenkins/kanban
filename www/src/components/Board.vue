@@ -2,7 +2,11 @@
 <template>
   <div class="Board">
     <button @click="logout">Logout</button>
-    <div></div>
+    <div>
+      <router-link :to="{ name: 'Home'}" class="navbar-brand">
+            <a>Home</a>
+        </router-link>
+    </div>
  <form @submit.prevent="createList">
     <input type="title" name="title" id="title" placeholder="Enter title" v-model="list.title">
     <input type="body" name="body" id="body" placeholder="Enter body" v-model="list.body">      
@@ -58,10 +62,16 @@ export default {
       this.$store.dispatch('logout')
     },
     createList() {
-   
-      this.list['boardId'] = this.$route.params.boardId
+      var blank = {
+        title: this.list.title,
+        body: this.list.body
+      }
+      blank['boardId'] = this.$route.params.boardId
   //  console.log(this.list)
-      this.$store.dispatch("createList", this.list);
+      this.$store.dispatch("createList", blank);
+      this.list.title = ""
+      this.list.body = ""
+
     },
     deleteList(list){
       this.$store.dispatch("deleteList", list)

@@ -15,7 +15,7 @@
    <li v-for="comment in comments" :key="comment._id">
      <!-- <tasks :myTask="task"></tasks> -->
        {{comment.title}}
-       <button @click="deleteComment(comment)">DELETE This shit</button>
+       <button @click="deleteComment(comment)">DELETE Comment</button>
      </li>
    </ul>
   </div>
@@ -55,11 +55,23 @@ export default {
   methods:{
     createComment(){
     
-      var newComment = this.comment;
-      newComment.taskId = this.myTask._id;
+    //   var newComment = this.comment;
+    //   newComment.taskId = this.myTask._id;
+    //   //    console.log(newComment)
+    // this.$store.dispatch("createComment", newComment);
     
-  //    console.log(newComment)
-    this.$store.dispatch("createComment", newComment);
+     var blank = {
+        title: this.comment.title,
+        body: this.comment.body,
+        taskId: this.myTask._id
+      }
+   
+      this.$store.dispatch("createComment", blank);
+      this.comment.title = ""
+      this.comment.body = ""
+    
+    
+    
     },
     moveTask(){
       this.myTask.oldListId = this.myTask.listId

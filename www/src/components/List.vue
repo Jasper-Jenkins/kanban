@@ -51,9 +51,22 @@ export default {
   },
   methods: {
     createTask() {
-      var newTask = this.task;
-      newTask.listId = this.myList._id; //assigning an id to the task that assocaites to the list
-      this.$store.dispatch("createTask", newTask);
+      // var newTask = this.task;
+      // newTask.listId = this.myList._id; //assigning an id to the task that assocaites to the list
+      // this.$store.dispatch("createTask", newTask);
+
+
+
+      var blank = {
+        title: this.task.title,
+        body: this.task.body,
+        listId: this.myList._id
+      }
+      // blank['boardId'] = this.$route.params.boardId
+  //  console.log(this.task)
+      this.$store.dispatch("createTask", blank);
+      this.task.title = ""
+      this.task.body = ""
     },
     setTask(){
       

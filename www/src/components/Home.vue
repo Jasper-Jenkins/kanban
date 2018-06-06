@@ -46,12 +46,13 @@ export default {
   mounted() {
     if (!this.$store.state.user._id) {
       // if no user id kick to the Login page
+    this.$store.dispatch("getBoards", this.user._id);
+    this.$store.dispatch("getTasks", this.myList._id);
       router.push({ name: "Login" });
     }
     //this.$store.dispatch()
    // console.log(this.user._id)
-    this.$store.dispatch("getBoards", this.user._id);
-    this.$store.dispatch("getTasks", this.myList._id);
+   
   },
   data() {
     return {

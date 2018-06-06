@@ -161,7 +161,7 @@ export default new vuex.Store({
                 })
         },
         getLists({ commit, dispatch }, boardId) {
-            //   console.log(boardId)
+              console.log(boardId)
             api.get('/api/boards/' + boardId + '/lists')
                 .then(res => {
                     //    console.log(res)
@@ -204,10 +204,8 @@ export default new vuex.Store({
          //   console.log(ghost)
             api.get('/api/tasks/' + taskId + '/comments')
                 .then(res => {
-
                  //   console.log(res.data)
                     var comments = res.data
-
                     // debugger
                     commit('setComments', { comments, taskId })
                 })
@@ -219,7 +217,33 @@ export default new vuex.Store({
                     dispatch('getTasks', task.listId)
 
                 })
+        }, deleteBoard({ commit, dispatch, state }, board) {
+            console.log(board)
+            api.delete('/api/boards/' + board._id, board)
+                .then(res => {
+                    dispatch('getBoards', board.userId)
+                 //   dispatch('deleteList', )
+                })
         },
+        deleteList({ commit, dispatch, state }, list) {
+         //   console.log(list)
+        //    console.log(state.tasks[list._id])
+            api.delete('/api/lists/' + list._id, list)
+                .then(res => {
+                    dispatch('getLists', list.boardId)
+                    console.log(state.tasks.list._id)
+                 //   dispatch('deleteTasks', state.tasks.list._id)    
+            })
+        },
+        
+        deleteTask({ commit, dispatch, state }, task) {
+            api.delete('/api/tasks/' + task._id, task)
+                .then(res => {
+                    dispatch('getTasks', task.listId)
+                })
+        },
+        // getComments({commit, dispatch}, taskId){
+
         deleteComment({ commit, dispatch, state }, comment) {
             console.log(comment)
             api.delete('/api/comments/' + comment._id, comment)
@@ -228,28 +252,9 @@ export default new vuex.Store({
                 })
         },
 
-        deleteList({ commit, dispatch, state }, list) {
-            console.log(list)
-            api.delete('/api/lists/' + list._id, list)
-                .then(res => {
-                    dispatch('getLists', list.boardId)
-                })
-        },
+      
+       
 
-        deleteBoard({ commit, dispatch, state }, board) {
-            api.delete('/api/boards/' + board.id, board)
-                .then(res => {
-                    dispatch('displayBoards', board.userId)
-                })
-        },
-
-        deleteTask({ commit, dispatch, state }, task) {
-            api.delete('/task/' + task.id, task)
-                .then(res => {
-                    dispatch('setTasks', task.listId)
-                })
-        }
-        // getComments({commit, dispatch}, taskId){
 
 
 
