@@ -11,7 +11,7 @@
  <ul>
    <li v-for="task in tasks" :key="task._id">
      <tasks :myTask="task"></tasks>  
-     <button @click="deleteTask(task)">DELETE</button>
+     <button @click="deleteTask(task)">DELETE Task</button>
      </li>
    </ul>
   <!-- {{tasks}}   -->
@@ -59,7 +59,7 @@ export default {
       
       this.$store.dispatch("getTasks", this.myList._id)
     }, 
-    deleteTask(){
+    deleteTask(task){
       this.$store.dispatch("deleteTask", task)
 
   },

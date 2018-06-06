@@ -10,7 +10,7 @@
     <li v-for="board in boards" :key="board.id">
      <router-link :to="{name: 'Board', params:{boardId: board._id}}">
        {{board.title}}
-       <button @click="deleteBoard(board)">DELETE</button>
+       <button @click="deleteBoard(board)">DELETE Board</button>
       </router-link>
      <!-- <board></board> -->
     </li>
@@ -71,7 +71,7 @@ export default {
     createBoard() {
       this.$store.dispatch("createBoard", this.board);
     },
-    deleteBoard(){
+    deleteBoard(board){
       this.$store.dispatch("deleteBoard", board)
   }
 }

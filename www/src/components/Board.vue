@@ -11,7 +11,7 @@
  <ul>
     <li v-for="list in lists" :key="list._id">
      <span>List item:</span> <lists :myList="list"></lists> 
-     <button @click="deleteList(list)">DELETE</button>
+     <button @click="deleteList(list)">DELETE List</button>
     </li>
 
   </ul>

@@ -239,14 +239,14 @@ export default new vuex.Store({
         deleteBoard({ commit, dispatch, state }, board) {
             api.delete('/api/boards/' + board.id, board)
                 .then(res => {
-                    commit('displayBoards')
+                    dispatch('displayBoards', board.userId)
                 })
         },
 
         deleteTask({ commit, dispatch, state }, task) {
             api.delete('/task/' + task.id, task)
                 .then(res => {
-                    commit('setTasks')
+                    dispatch('setTasks', task.listId)
                 })
         }
         // getComments({commit, dispatch}, taskId){
