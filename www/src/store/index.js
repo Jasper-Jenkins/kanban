@@ -69,12 +69,23 @@ export default new vuex.Store({
             state.comments = comment
         },
         setComments(state, { taskId, comments }) {
-            console.log(comments)
-            // if (comments[0]) {
-            vue.set(state.comments, taskId, comments)
-            // }
-        }
-
+        console.log(comments)
+        // if (comments[0]) {
+        vue.set(state.comments, taskId, comments)
+        // }
+        },
+        deleteBoard(state, board){   
+        state.boards = board
+        },
+        deleteList(state, list){   
+            state.lists = list
+        },
+        deleteTask(state, task){   
+        state.tasks = task
+        },
+        deletComment(state, comment){   
+            state.comments = comment
+        },
 
     },
     actions: {
@@ -94,7 +105,7 @@ export default new vuex.Store({
      //   register({ commit, dispatch }, userData) { },
 
 
-        //Brian ADded logout/register double check..
+     //Brian ADded logout/register double check..
 
         logout({commit, dispatch}){
             auth.delete('/auth/logout') 
@@ -112,14 +123,6 @@ export default new vuex.Store({
                router.push({name: 'Home'})
             })
         },
-
-
-
-
-
-
-
-
         authenticate({ commit, dispatch }) {
             api.get('/authenticate')
                 .then(res => {
@@ -217,10 +220,36 @@ export default new vuex.Store({
 
             })
         }
-
         // getComments({commit, dispatch}, taskId){
 
         // }
+        deleteComment({commit, dispatch, state}, comment) {
+            api.delete(‘/comments/‘+comment._id, comment)
+            .then(res=>{
+            dispatch(‘getComments’)
+            })
+        },
+            
+            deleteList({commit, dispatch, state}, list) {
+            api.delete(‘/list/‘+list._id, list)
+            .then(res=>{
+            dispatch(‘getList’)
+            })
+        },
+            
+            deleteBoard({commit, dispatch, state}, board) {
+            api.delete(‘/board/‘+board._id, board)
+            .then(res=>{
+            dispatch(‘getBoard’)
+            })
+        },
+            
+            deleteTask({commit, dispatch, state}, task) {
+            api.delete(‘/task/‘+task._id, task)
+            .then(res=>{
+            dispatch(‘getTasks’)
+            })
+        }
 
 
 
