@@ -209,6 +209,14 @@ export default new vuex.Store({
                     commit('setComments', {comments, taskId})
                 })
         },
+        moveTask({commit, dispatch}, task){
+            api.put('/api/tasks/'+ task._id, task)
+            .then(res=>{
+                dispatch('getTasks', task.oldListId)
+                dispatch('getTasks', task.listId)
+
+            })
+        }
 
         // getComments({commit, dispatch}, taskId){
 

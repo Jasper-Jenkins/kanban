@@ -1,6 +1,11 @@
 <template>
   <div class="Task">
    {{myTask.title}}
+   <select v-model="newListId">
+      <option disabled value=''>Select list</option>
+      <option v-for="list in lists" :key="list._id" :value="list._id">{{list.title}}</option>
+   </select>
+   <button @click="moveTask">Move Task</button>
    <form @submit.prevent="createComment">
     <input type="title" name="title" id="title" placeholder="Enter title" v-model="comment.title">
     <input type="body" name="body" id="body" placeholder="Enter body" v-model="comment.body">      
@@ -29,7 +34,8 @@ export default {
       comment:{
         title: "",
         body: ""
-      }
+      },
+      newListId: ''
     };
   },
   mounted(){
@@ -41,6 +47,9 @@ export default {
     //  debugger
       console.log(this.myTask._id)
       return this.$store.state.comments[this.myTask._id]
+    },
+    lists(){
+      return this.$store.state.lists
     }
   },
   methods:{
@@ -51,6 +60,11 @@ export default {
     
       console.log(newComment)
     this.$store.dispatch("createComment", newComment);
+    },
+    moveTask(){
+      this.myTask.oldListId = this.myTask.listId
+      this.myTask.listId = this.newListId
+      this.$store.dispatch("moveTask", this.myTask)
     }
   }
 }
