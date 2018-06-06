@@ -42,7 +42,7 @@ export default {
   computed: {
     user() {
       var user = this.$store.state.user;
-      console.log(user);
+    //  console.log(user);
       return user;
     },
     // board() {
@@ -60,12 +60,13 @@ export default {
     createList() {
    
       this.list['boardId'] = this.$route.params.boardId
-    console.log(this.list)
+  //  console.log(this.list)
       this.$store.dispatch("createList", this.list);
     },
-    deleteList(){
+    deleteList(list){
       this.$store.dispatch("deleteList", list)
   }
+}
 }
 </script>
 

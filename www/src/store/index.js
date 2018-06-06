@@ -27,11 +27,11 @@ export default new vuex.Store({
     state: {
         user: {},
         boards: [],
-     //   activeBoard: [],
+        //   activeBoard: [],
         tasks: {},
         lists: [],
         comments: {},
-       // boardLists: []
+        // boardLists: []
     },
     mutations: {
         setUser(state, user) {
@@ -69,21 +69,21 @@ export default new vuex.Store({
             state.comments = comment
         },
         setComments(state, { taskId, comments }) {
-        console.log(comments)
-        // if (comments[0]) {
-        vue.set(state.comments, taskId, comments)
-        // }
+           // console.log(comments)
+            // if (comments[0]) {
+            vue.set(state.comments, taskId, comments)
+            // }
         },
-        deleteBoard(state, board){   
-        state.boards = board
+        deleteBoard(state, board) {
+            state.boards = board
         },
-        deleteList(state, list){   
+        deleteList(state, list) {
             state.lists = list
         },
-        deleteTask(state, task){   
-        state.tasks = task
+        deleteTask(state, task) {
+            state.tasks = task
         },
-        deletComment(state, comment){   
+        deletComment(state, comment) {
             state.comments = comment
         },
 
@@ -101,27 +101,27 @@ export default new vuex.Store({
 
                 })
         },
-      //  logout({ commit, dispatch }) { },
-     //   register({ commit, dispatch }, userData) { },
+        //  logout({ commit, dispatch }) { },
+        //   register({ commit, dispatch }, userData) { },
 
 
-     //Brian ADded logout/register double check..
+        //Brian ADded logout/register double check..
 
-        logout({commit, dispatch}){
-            auth.delete('/auth/logout') 
-            .then(res=>{
-                commit('deleteUser')
-                router.push({name: 'Login'})
-            })
+        logout({ commit, dispatch }) {
+            auth.delete('/auth/logout')
+                .then(res => {
+                    commit('deleteUser')
+                    router.push({ name: 'Login' })
+                })
         },
 
 
-        register({commit, dispatch}, userData){
-            auth.post('/auth/register', userData) 
-            .then(res=>{
-                commit('setUser', res.data)
-               router.push({name: 'Home'})
-            })
+        register({ commit, dispatch }, userData) {
+            auth.post('/auth/register', userData)
+                .then(res => {
+                    commit('setUser', res.data)
+                    router.push({ name: 'Home' })
+                })
         },
         authenticate({ commit, dispatch }) {
             api.get('/authenticate')
@@ -139,7 +139,7 @@ export default new vuex.Store({
             // console.log(board)
             api.post('/api/boards/', board)
                 .then(res => {
-                    console.log(res.data)
+               //     console.log(res.data)
                     commit('createBoard', res.data)
                 })
 
@@ -201,54 +201,56 @@ export default new vuex.Store({
         },
         getComments({ commit, dispatch }, taskId) {
             var ghost = taskId
-            console.log(ghost)
+         //   console.log(ghost)
             api.get('/api/tasks/' + taskId + '/comments')
                 .then(res => {
 
-                    console.log(res.data)
+                 //   console.log(res.data)
                     var comments = res.data
 
                     // debugger
-                    commit('setComments', {comments, taskId})
+                    commit('setComments', { comments, taskId })
                 })
         },
-        moveTask({commit, dispatch}, task){
-            api.put('/api/tasks/'+ task._id, task)
-            .then(res=>{
-                dispatch('getTasks', task.oldListId)
-                dispatch('getTasks', task.listId)
+        moveTask({ commit, dispatch }, task) {
+            api.put('/api/tasks/' + task._id, task)
+                .then(res => {
+                    dispatch('getTasks', task.oldListId)
+                    dispatch('getTasks', task.listId)
 
-            })
+                })
         },
-            deleteComment({commit, dispatch, state}, comment) {
-            api.delete('/api/comments/' +comment.id, comment)
-            .then(res=>{
-            commit('setComments',)
-            })
+        deleteComment({ commit, dispatch, state }, comment) {
+            console.log(comment)
+            api.delete('/api/comments/' + comment._id, comment)
+                .then(res => {
+                    dispatch('getComments', comment.taskId)
+                })
         },
-            
-            deleteList({commit, dispatch, state}, list) {
-            api.delete('/api/lists/' +list.id, list)
-            .then(res=>{
-            commit('getList', )
-            })
+
+        deleteList({ commit, dispatch, state }, list) {
+            console.log(list)
+            api.delete('/api/lists/' + list._id, list)
+                .then(res => {
+                    dispatch('getLists', list.boardId)
+                })
         },
-            
-            deleteBoard({commit, dispatch, state}, board) {
-            api.delete('/api/boards/' +board.id, board)
-            .then(res=>{
-            commit('displayBoards')
-            })
+
+        deleteBoard({ commit, dispatch, state }, board) {
+            api.delete('/api/boards/' + board.id, board)
+                .then(res => {
+                    commit('displayBoards')
+                })
         },
-            
-            deleteTask({commit, dispatch, state}, task) {
-            api.delete('/task/' +task.id, task)
-            .then(res=>{
-            commit('setTasks')
-            })
+
+        deleteTask({ commit, dispatch, state }, task) {
+            api.delete('/task/' + task.id, task)
+                .then(res => {
+                    commit('setTasks')
+                })
         }
- // getComments({commit, dispatch}, taskId){
-    
+        // getComments({commit, dispatch}, taskId){
+
 
 
     }

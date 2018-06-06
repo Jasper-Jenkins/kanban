@@ -47,11 +47,6 @@ var lists = require('./server-assets/routes/list')
 var comments = require('./server-assets/routes/comment')
 var tasks = require('./server-assets/routes/task')
 
-
-
-
-
-
 //app.use(users.router)
 //app.use(songs.router)
 app.use(boards.router)
