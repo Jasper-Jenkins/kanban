@@ -9,14 +9,14 @@ var baseUrl = production ? 'http://kanban-fun.herokuapp.com/' : 'http://localhos
 
 
 let api = axios.create({
-    baseURL: 'http://localhost:3000',
+    baseURL: baseUrl,
     timeout: 3000,
     withCredentials: true
 
 })
 
 let auth = axios.create({
-    baseURL: 'http://localhost:3000',
+    baseURL: baseUrl,
     timeout: 3000,
     withCredentials: true
 })
