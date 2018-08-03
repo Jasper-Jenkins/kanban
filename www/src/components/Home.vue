@@ -1,21 +1,33 @@
 <template>
-  <div class="Home">
+  <div class="Home container-fluid">
+  <venture></venture>   
   <form @submit.prevent="createBoard">
     <input type="title" name="title" id="title" placeholder="Enter title" v-model="board.title">
     <input type="body" name="body" id="body" placeholder="Enter body" v-model="board.body">      
     <button type="submit">Create Board</button>
    </form> 
-   <button @click='logout'>Logout</button>     
+   <!-- <button @click='logout'>Logout</button>      -->
+  <div class="row justify-content-center">
+      <div class="col-12">
+        <h5>Choose the board of your choice.</h5>
+      </div>
+      <div class="col-2" v-for="board in boards" v-bind:key="board._id">
+        <button class="btn btn-primary" @click="setActiveBoard(board)">{{board.title}}</button>
+        <button @click="deleteBoard(board)">DELETE Board</button>
+      </div>
+  </div>
+ 
+<!--  
  <ul>
     <li v-for="board in boards" :key="board.id">
-     <router-link :to="{name: 'Board', params:{boardId: board._id}}">
+    <router-link :to="{name: 'Board', params:{boardId: board._id}}">
        {{board.title}}
-       <button @click="deleteBoard(board)">DELETE Board</button>
-      </router-link>
-     <!-- <board></board> -->
+      
+    </router-link>
+     <board></board>
     </li>
 
-  </ul>
+  </ul> -->
   
     <p>Choose a board</p>
   </div>
@@ -24,13 +36,35 @@
 <script>
 import router from "../router";
 import board from "./Board";
+import venture from "./Venture";
 
 export default {
   name: "Home",
+  data() {
+    return {
+      board: {
+        title: "",
+        body: "",
+        userId: ""
+      }
+    };
+  },
   components: {
-    board
+    board,
+    venture
   },
 
+  mounted() {
+    if (!this.$store.state.user._id) {
+      // if no user id kick to the Login page
+      router.push({ name: "Login" });
+    }else{
+       this.$store.dispatch("getBoards", this.user._id);
+    }
+    //this.$store.dispatch()
+   // console.log(this.user._id)
+   
+  },
   computed: {
     user() {
       var user = this.$store.state.user;
@@ -43,32 +77,12 @@ export default {
       return board;
     }
   },
-  mounted() {
-    if (!this.$store.state.user._id) {
-      // if no user id kick to the Login page
-    this.$store.dispatch("getBoards", this.user._id);
-    this.$store.dispatch("getTasks", this.myList._id);
-      router.push({ name: "Login" });
-    }
-    //this.$store.dispatch()
-   // console.log(this.user._id)
-   
-  },
-  data() {
-    return {
-      board: {
-        title: "",
-        body: "",
-        userId: ""
-      }
-    };
-  },
+
 
   methods: {
     logout(){
       this.$store.dispatch('logout')
     },
-
     createBoard() {
       this.$store.dispatch("createBoard", this.board);
     },

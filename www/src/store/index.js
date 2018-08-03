@@ -6,13 +6,10 @@ import axios from 'axios'
 var production = !window.location.host.includes('localhost');
 var baseUrl = production ? 'http://kanban-fun.herokuapp.com/' : 'http://localhost:3000';
 
-
-
 let api = axios.create({
     baseURL: baseUrl,
     timeout: 3000,
     withCredentials: true
-
 })
 
 let auth = axios.create({
@@ -27,7 +24,7 @@ export default new vuex.Store({
     state: {
         user: {},
         boards: [],
-        //   activeBoard: [],
+        activeBoard: {},
         tasks: {},
         lists: [],
         comments: {},
@@ -147,7 +144,7 @@ export default new vuex.Store({
         getBoards({ commit, dispatch }, userId) {
             api.get('/api/boards/user/' + userId)
                 .then(res => {
-                    //    console.log(res.data)
+                    console.log(res.data)
                     commit('displayBoards', res.data)
                 })
         },
@@ -180,10 +177,8 @@ export default new vuex.Store({
         getTasks({ commit, dispatch }, listId) {
             var ghost = listId
             //  console.log(ghost)
-
             api.get('/api/lists/' + listId + '/tasks')
                 .then(res => {
-
                     var tasks = res.data
                     // debugger
                     commit('setTasks', { listId, tasks }) //tasks has a key:value pair from line 184 

@@ -1,12 +1,12 @@
 
 <template>
   <div class="Board">
-    <button @click="logout">Logout</button>
-    <div>
+    <!-- <button @click="logout">Logout</button> -->
+    <!-- <div>
       <router-link :to="{ name: 'Home'}" class="navbar-brand">
             <a>Home</a>
         </router-link>
-    </div>
+    </div> -->
  <form @submit.prevent="createList">
     <input type="title" name="title" id="title" placeholder="Enter title" v-model="list.title">
     <input type="body" name="body" id="body" placeholder="Enter body" v-model="list.body">      
@@ -17,8 +17,7 @@
      <span>List item:</span> <lists :myList="list"></lists> 
      <button @click="deleteList(list)">DELETE List</button>
     </li>
-
-  </ul>
+ </ul>
  
 
   </div>
@@ -35,8 +34,9 @@ export default {
   },
   data() {
     return {
-      list: { title: '',
-      body: '', 
+      list: { 
+        title: '',
+        body: '', 
      }
     };
   },

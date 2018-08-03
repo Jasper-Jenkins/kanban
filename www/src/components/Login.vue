@@ -1,42 +1,40 @@
 <template>
-<div>
-  <div class="userLogin">
-   
-   <form @submit.prevent="userLogin">
-    <input type="email" name="email" id="email" placeholder="Enter email" v-model="login.email">
-    <input type="text" name="password" id="password" placeholder="Enter password" v-model="login.password">      
-    <button type="submit">LOGIN</button>
-   </form>
-     </div>
-     <div class="userRegister">
-    <form @submit.prevent="userRegister">
-     <input type="email" name="email" id="email" placeholder="Enter email" v-model="register.email">
-     <input type="text" name="password" id="password" placeholder="Enter password" v-model="register.password">      
-     <button type="submit">REGISTER</button>
-    </form>
-   </div>
-
+  <div>
+    <div class="userLogin">
+      <form @submit.prevent="userLogin">
+        <input type="email" name="email" id="email" placeholder="Enter email" v-model="login.email">
+        <input type="text" name="password" id="password" placeholder="Enter password" v-model="login.password">      
+        <button type="submit">LOGIN</button>
+      </form>
+    </div>
+    <div class="userRegister">
+      <form @submit.prevent="userRegister">
+        <input type="email" name="email" id="email" placeholder="Enter email" v-model="register.email">
+        <input type="text" name="password" id="password" placeholder="Enter password" v-model="register.password">      
+        <button type="submit">REGISTER</button>
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: "Login",
+  data() {
+  return {
+    register:{
+      email: "",
+      password:""
+    },
+    login: {
+      email: "",
+      password: ""
+    }
+  };
+},
 
   mounted() {
     this.$store.dispatch("authenticate");
-  },
-  data() {
-    return {
-      register:{
-        email: "",
-        password:""
-      },
-      login: {
-        email: "",
-        password: ""
-      }
-    };
   },
   computed: {},
   methods: {
