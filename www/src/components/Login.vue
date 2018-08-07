@@ -34,7 +34,7 @@ export default {
 },
 
   mounted() {
-    this.$store.dispatch("authenticate");
+    // this.$store.dispatch("authenticate");
   },
   computed: {},
   methods: {

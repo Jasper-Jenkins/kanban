@@ -28,7 +28,6 @@ router.post('/auth/login', (req, res) => {
       if (!user) {
         return res.status(400).send(loginError)
       }
-
       if (!user.validatePassword(req.body.password)) {
         return res.status(400).send(loginError)
       }

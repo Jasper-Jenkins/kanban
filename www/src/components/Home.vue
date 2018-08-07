@@ -1,5 +1,12 @@
 <template>
   <div class="Home container-fluid">
+    <div class="row">
+      <ul>
+      <li v-bind="actvBoard">
+
+      </li>
+      </ul>
+    </div>
   <venture></venture>   
   <form @submit.prevent="createBoard">
     <input type="title" name="title" id="title" placeholder="Enter title" v-model="board.title">
@@ -12,11 +19,19 @@
         <h5>Choose the board of your choice.</h5>
       </div>
       <div class="col-2" v-for="board in boards" v-bind:key="board._id">
+        
         <button class="btn btn-primary" @click="setActiveBoard(board)">{{board.title}}</button>
         <button @click="deleteBoard(board)">DELETE Board</button>
       </div>
   </div>
- 
+ <div class="row">
+
+   <!-- <div v-bind="activeBoard"></div> -->
+
+
+   {{activeBoard()}}
+   <!-- {{activeBoard.title}} -->
+ </div>
 <!--  
  <ul>
     <li v-for="board in boards" :key="board.id">
@@ -38,11 +53,17 @@ import router from "../router";
 import board from "./Board";
 import venture from "./Venture";
 
+
 export default {
   name: "Home",
   data() {
     return {
       board: {
+        title: "",
+        body: "",
+        userId: ""
+      },
+      actvBoard: {
         title: "",
         body: "",
         userId: ""
@@ -66,6 +87,9 @@ export default {
    
   },
   computed: {
+    // clockTime() {
+    //   return Date.now()
+    // },
     user() {
       var user = this.$store.state.user;
     //  console.log(user);
@@ -75,10 +99,12 @@ export default {
       var board = this.$store.state.boards;
     //  console.log(board)
       return board;
-    }
+    },
+    // activeBoard(){
+    //   var activeBoard = this.$store.state.activeBoard;
+    // }
+    
   },
-
-
   methods: {
     logout(){
       this.$store.dispatch('logout')
@@ -88,7 +114,14 @@ export default {
     },
     deleteBoard(board){
       this.$store.dispatch("deleteBoard", board)
-  }
+    },
+    setActiveBoard(board){
+      this.$store.dispatch("setActiveBoard", board)
+    },
+    activeBoard(){
+      var aboard = this.$store.state.activeBoard;
+      return aboard;
+    }
 }
 }
 </script>

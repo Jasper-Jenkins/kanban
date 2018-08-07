@@ -43,6 +43,9 @@ export default new vuex.Store({
         displayBoards(state, boards) {
             state.boards = boards
         },
+        setActiveBoard(state, board){
+            state.activeBoard = board
+        },
         createList(state, list) {
             state.lists.push(list)
         },
@@ -95,14 +98,11 @@ export default new vuex.Store({
                     router.push({ name: 'Home' })
                 })
                 .catch(res => {
-
                 })
         },
         //  logout({ commit, dispatch }) { },
         //   register({ commit, dispatch }, userData) { },
 
-
-        //Brian ADded logout/register double check..
 
         logout({ commit, dispatch }) {
             auth.delete('/auth/logout')
@@ -127,7 +127,9 @@ export default new vuex.Store({
                     commit('setUser', res.data)
                     router.push({ name: 'Home' })
                 })
-                .catch(res => { })
+                .catch(res => {
+                    console.log(res)
+                 })
         },
         createBoard({ commit, dispatch }, board) {
 
@@ -147,6 +149,9 @@ export default new vuex.Store({
                     console.log(res.data)
                     commit('displayBoards', res.data)
                 })
+        },
+        setActiveBoard({commit}, board){
+            commit('setActiveBoard', board)
         },
         createList({ commit, dispatch }, list) {
             //   debugger

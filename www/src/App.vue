@@ -6,10 +6,15 @@
 </template>
 
 <script>
+import router from "./router";
 export default {
   name: 'App',
   mounted(){
-    this.$store.dispatch("authenticate")
+    if(!this.$store.state.user._id){
+      router.push({ name: "Login" });
+    }else{
+      this.$store.dispatch("authenticate")
+    }
   },
 }
 </script>
